@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Exceptions\LimiteInvalidoException;
 use PHPUnit\Framework\TestCase;
 
 use App\Models\Conta;
@@ -19,6 +20,15 @@ class ContaTest extends TestCase
         $conta = new Conta();
 
         $this->assertEquals(0, $conta->getSaldo());
+    }
+
+    public function testNaoPermiteInicializacaoComLimiteNegativo()
+    {
+        $this->expectException(LimiteInvalidoException::class);
+
+        $limite = rand(-100, -1);
+
+        new Conta(0, $limite);
     }
 
     public function testSaldoDiferenteDeZeroNaCriacaoComValorInicial()
@@ -51,5 +61,17 @@ class ContaTest extends TestCase
         $saldoFinalEsperado = $valorInicial - $valorDebito->getQuantia();
 
         $this->assertEquals($saldoFinalEsperado, $conta->getSaldo());
+    }
+
+    public function testCalculaSaldoTotalDisponivel()
+    {
+        $saldoInicial = rand(0,100);
+        $limiteInicial = rand(0,100);
+
+        $conta = new Conta($saldoInicial, $limiteInicial);
+
+        $saldoTotalDisponivel = $saldoInicial + $limiteInicial;
+
+        $this->assertEquals($saldoTotalDisponivel, $conta->getSaldoTotalDisponivel());
     }
 }

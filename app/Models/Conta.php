@@ -56,7 +56,7 @@ class Conta
         $this->setSaldo($novoSaldo);
     }
 
-    public function getTotalDisponivel()
+    public function getSaldoTotalDisponivel()
     {
         return $this->getSaldo() + $this->getLimite();
     }
