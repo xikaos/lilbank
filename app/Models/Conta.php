@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Valor;
+
 class Conta
 {
     protected $saldo;
@@ -21,16 +23,16 @@ class Conta
         $this->saldo = $valor;
     }
 
-    public function debitar(int $valor) : void
+    public function debitar(Valor $valor) : void
     {
-        $novoSaldo = $this->getSaldo() - $valor;
+        $novoSaldo = $this->getSaldo() - $valor->getQuantia();
 
         $this->setSaldo($novoSaldo);
     }
 
-    public function creditar(int $valor) : void
+    public function creditar(Valor $valor) : void
     {
-        $novoSaldo = $this->getSaldo() + $valor;
+        $novoSaldo = $this->getSaldo() + $valor->getQuantia();
 
         $this->setSaldo($novoSaldo);
     }

@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use PHPUnit\Framework\TestCase;
 
 use App\Models\Conta;
+use App\Models\Valor;
 
 class ContaTest extends TestCase
 {
@@ -31,23 +32,23 @@ class ContaTest extends TestCase
     public function testCreditarValorNaConta()
     {
         $conta = new Conta();
-        $valorCredito = 100;
+        $valorCredito = new Valor(rand(0, 100));
 
         $conta->creditar($valorCredito);
 
-        $this->assertEquals($valorCredito, $conta->getSaldo());
+        $this->assertEquals($valorCredito->getQuantia(), $conta->getSaldo());
     }
 
     public function testDebitarValorNaConta()
     {
         $valorInicial = 100;
-        $valorDebito = 50;
+        $valorDebito = new Valor(rand(0, 50));
         
         $conta = new Conta($valorInicial);
         
         $conta->debitar($valorDebito);
         
-        $saldoFinalEsperado = $valorInicial - $valorDebito;
+        $saldoFinalEsperado = $valorInicial - $valorDebito->getQuantia();
 
         $this->assertEquals($saldoFinalEsperado, $conta->getSaldo());
     }

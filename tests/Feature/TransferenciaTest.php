@@ -7,6 +7,8 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 use App\Models\Conta;
+use App\Models\Valor;
+
 use App\Contracts\Domain\TransferenciaServiceContract;
 
 class TransferenciaTest extends TestCase
@@ -43,10 +45,10 @@ class TransferenciaTest extends TestCase
         $this->contaOrigem = new Conta($this->saldoContaOrigem);
         $this->contaDestino = new Conta($this->saldoContaDestino);
 
-        $this->valorTransferencia = $this->faker->numberBetween(0, 100);
+        $this->valorTransferencia = new Valor($this->faker->numberBetween(0, 100));
 
-        $this->saldoFinalOrigem = $this->saldoContaOrigem - $this->valorTransferencia;
-        $this->saldoFinalDestino = $this->saldoContaDestino + $this->valorTransferencia;
+        $this->saldoFinalOrigem = $this->saldoContaOrigem - $this->valorTransferencia->getQuantia();
+        $this->saldoFinalDestino = $this->saldoContaDestino + $this->valorTransferencia->getQuantia();
     }
     /**
      * A basic feature test example.
