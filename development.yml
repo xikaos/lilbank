@@ -1,0 +1,42 @@
+version: "3.7"
+
+# volumes list.
+volumes:
+  mysql-data:        # Persist MySQL data.
+
+# services definition.
+services:
+  app: # Application container
+    build:
+      context: docker
+      dockerfile: App.Dockerfile.Dev
+    container_name: lilbank_app
+    volumes:
+      - .:/var/www/app
+    ports:
+      - 80:8080
+    # environment:
+    #   # - HTTP_PROXY=172.22.0.1:80
+    #   # - HTTPS_PROXY=172.22.0.1:8080
+
+  db:  # MySQL database
+    container_name: lilbank_db
+    build:
+      context: docker
+      dockerfile: Db.Dockerfile
+    volumes:
+      - 'mysql-data:/var/lib/mysql' # persist "/var/lib/mysql" on volume "mysql-data".
+    ports:
+      - '3306:3306'  # Port 3306 => MySQL TCP interface.
+    environment:
+      - MYSQL_ROOT_PASSWORD=lilbank  # password for user user root.
+      - MYSQL_DATABASE=lilbank       # database name (to be created on first run).
+      - MYSQL_USER=lilbank           # regular user name.
+      - MYSQL_PASSWORD=lilbank       # regular user password.
+
+  assets: # Application container
+    image: ambientum/node:13
+    container_name: lilbank_assets
+    volumes:
+      - .:/var/www/app
+    command: npm run watch
