@@ -30,6 +30,19 @@ class TransferenciaTest extends TestCase
 
         $this->transferenciaService = $this->app->make(TransferenciaServiceContract::class);
     }
+
+    private function inicializaSaldosEContas()
+    {
+        $saldoContaOrigem = $this->faker->numberBetween(0, 100);
+        $saldoContaDestino = $this->faker->numberBetween(0, 100);
+
+        return [
+            'saldoContaOrigem'  => $saldoContaOrigem,
+            'saldoContaDestino' => $saldoContaDestino,
+            'contaOrigem'       => new Conta($saldoContaOrigem),
+            'contaDestino'      => new Conta($saldoContaDestino)
+        ];
+    }
     /**
      * A basic feature test example.
      *
@@ -37,16 +50,14 @@ class TransferenciaTest extends TestCase
      */
     public function test_transferencia_entre_contas()
     {
-        $saldoContaOrigem = $this->faker->numberBetween(0, 100);
-        $saldoContaDestino = $this->faker->numberBetween(0, 100);
-
-        $contaOrigem = new Conta($saldoContaOrigem);
-        $contaDestino = new Conta($saldoContaDestino);
+        [
+            'saldoContaOrigem'  => $saldoContaOrigem,
+            'saldoContaDestino' => $saldoContaDestino,
+            'contaOrigem'       => $contaOrigem,
+            'contaDestino'      => $contaDestino
+        ] = $this->inicializaSaldosEContas();
 
         $valorTransferencia = new Valor($this->faker->numberBetween(0, $contaOrigem->getSaldoTotalDisponivel()));
-
-        $saldoFinalOrigem = $saldoContaOrigem - $valorTransferencia->getQuantia();
-        $saldoFinalDestino = $saldoContaDestino + $valorTransferencia->getQuantia();
 
         $this->transferenciaService->transferir(
             $contaOrigem,
@@ -54,20 +65,22 @@ class TransferenciaTest extends TestCase
             $valorTransferencia
         );
 
+        $saldoFinalOrigem = $saldoContaOrigem - $valorTransferencia->getQuantia();
+        $saldoFinalDestino = $saldoContaDestino + $valorTransferencia->getQuantia();
+
         $this->assertEquals($saldoFinalOrigem, $contaOrigem->getSaldo());
         $this->assertEquals($saldoFinalDestino, $contaDestino->getSaldo());
     }
 
     public function test_nao_permite_transferencia_com_valor_maior_que_saldo_total_disponivel()
     {
-        // Duplicate, refactor as soon as possible.
-        $saldoContaOrigem = $this->faker->numberBetween(0, 100);
-        $saldoContaDestino = $this->faker->numberBetween(0, 100);
+        [
+            'contaOrigem'   => $contaOrigem,
+            'contaDestino'  => $contaDestino
+        ] = $this->inicializaSaldosEContas();
 
         $limiteContaOrigem = $this->faker->numberBetween(0, 100);
-
-        $contaOrigem = new Conta($saldoContaOrigem, $limiteContaOrigem);
-        $contaDestino = new Conta($saldoContaDestino);
+        $contaOrigem->setLimite($limiteContaOrigem);
 
         $valorExcedente = $this->faker->numberBetween(1, 100);
         $valorTransferencia = new Valor($contaOrigem->getSaldoTotalDisponivel() + $valorExcedente);
