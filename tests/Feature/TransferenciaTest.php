@@ -71,7 +71,7 @@ class TransferenciaTest extends TestCase
             'contaDestino'      => $contaDestino
         ] = $this->inicializaSaldosEContas();
 
-        $valorTransferencia = new Valor($this->faker->numberBetween(0, $contaOrigem->getSaldoTotalDisponivel()));
+        $valorTransferencia = new Valor($this->faker->numberBetween(1, $contaOrigem->getSaldoTotalDisponivel()));
 
         $this->transferenciaService->transferir(
             $contaOrigem,
