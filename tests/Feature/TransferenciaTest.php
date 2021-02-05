@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -12,6 +11,7 @@ use App\Models\Conta;
 use App\Models\Valor;
 
 use App\Exceptions\LimiteInsuficienteException;
+use App\Exceptions\QuantiaInvalidaException;
 
 class TransferenciaTest extends TestCase
 {
@@ -43,11 +43,25 @@ class TransferenciaTest extends TestCase
             'contaDestino'      => new Conta($saldoContaDestino)
         ];
     }
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
+
+    public function test_nao_permite_transferencia_de_valor_zero()
+    {
+        [
+            'saldoContaOrigem'  => $saldoContaOrigem,
+            'saldoContaDestino' => $saldoContaDestino,
+            'contaOrigem'       => $contaOrigem,
+            'contaDestino'      => $contaDestino
+        ] = $this->inicializaSaldosEContas();
+
+        $this->expectException(QuantiaInvalidaException::class);
+
+        $this->transferenciaService->transferir(
+            $contaOrigem,
+            $contaDestino,
+            new Valor(0)
+        );
+    }
+
     public function test_transferencia_entre_contas()
     {
         [
