@@ -8,13 +8,20 @@ use App\Exceptions\LimiteInvalidoException;
 
 class Conta
 {
+    protected $identificador;
     protected $saldo;
     protected $limite;
 
-    public function __construct(int $saldo = 0, int $limite = 0)
+    public function __construct(string $identificador = null, int $saldo = 0, int $limite = 0)
     {
-        $this->setSaldo($saldo);
+        $this->identificador = $identificador;
+        $this->saldo = $saldo;
         $this->setLimite($limite);
+    }
+
+    public function getIdentificador() : string
+    {
+        return $this->identificador;
     }
 
     public function getSaldo() : int
