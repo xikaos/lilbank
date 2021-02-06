@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use Ramsey\Uuid\Uuid;
+
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -36,11 +38,21 @@ class TransferenciaTest extends TestCase
         $saldoContaOrigem = $this->faker->numberBetween(0, 100);
         $saldoContaDestino = $this->faker->numberBetween(0, 100);
 
+        $contaOrigem = new Conta(
+            identificador: Uuid::uuid4(),
+            saldo: $saldoContaOrigem
+        );
+
+        $contaDestino = new Conta(
+            identificador: Uuid::uuid4(),
+            saldo: $saldoContaDestino
+        );
+
         return [
             'saldoContaOrigem'  => $saldoContaOrigem,
             'saldoContaDestino' => $saldoContaDestino,
-            'contaOrigem'       => new Conta($saldoContaOrigem),
-            'contaDestino'      => new Conta($saldoContaDestino)
+            'contaOrigem'       => $contaOrigem,
+            'contaDestino'      => $contaDestino
         ];
     }
 

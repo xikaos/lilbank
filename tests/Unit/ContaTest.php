@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use Ramsey\Uuid\Uuid;
+
 use App\Exceptions\LimiteInvalidoException;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +19,9 @@ class ContaTest extends TestCase
      */
     public function testSaldoZeradoNaCriacaoDeConta()
     {
-        $conta = new Conta();
+        $conta = new Conta(
+            identificador: Uuid::uuid4()
+        );
 
         $this->assertEquals(0, $conta->getSaldo());
     }
@@ -28,20 +32,26 @@ class ContaTest extends TestCase
 
         $limite = rand(-100, -1);
 
-        new Conta(0, $limite);
+        new Conta(
+            identificador: Uuid::uuid4(),
+            limite: $limite
+        );
     }
 
     public function testSaldoDiferenteDeZeroNaCriacaoComValorInicial()
     {
         $valorInicial = 100;
-        $conta = new Conta($valorInicial);
+        $conta = new Conta(
+            identificador: Uuid::uuid4(),
+            saldo: $valorInicial
+        );
 
         $this->assertEquals($valorInicial, $conta->getSaldo());
     }
 
     public function testCreditarValorNaConta()
     {
-        $conta = new Conta();
+        $conta = new Conta(Uuid::uuid4());
         $valorCredito = new Valor(rand(0, 100));
 
         $conta->creditar($valorCredito);
@@ -54,7 +64,10 @@ class ContaTest extends TestCase
         $valorInicial = 100;
         $valorDebito = new Valor(rand(0, 50));
         
-        $conta = new Conta($valorInicial);
+        $conta = new Conta(
+            identificador: Uuid::uuid4(),
+            saldo: $valorInicial
+        );
         
         $conta->debitar($valorDebito);
         
@@ -68,7 +81,11 @@ class ContaTest extends TestCase
         $saldoInicial = rand(0,100);
         $limiteInicial = rand(0,100);
 
-        $conta = new Conta($saldoInicial, $limiteInicial);
+        $conta = new Conta(
+            identificador: Uuid::uuid4(),
+            saldo: $saldoInicial,
+            limite: $limiteInicial
+        );
 
         $saldoTotalDisponivel = $saldoInicial + $limiteInicial;
 
