@@ -2,22 +2,16 @@
 
 namespace App\Repositories\Application;
 
-use Exception;
-
-use Illuminate\Support\Facades\DB;
-
 use App\Contracts\Application\ContaRepositoryContract;
-
-use App\Models\Conta;
-
 use App\Exceptions\ContaNaoEncontradaException;
 use App\Exceptions\ContaNaoSalvaException;
-
-// I don't like namespacing this factory into Database. Need to change later.
+use App\Models\Conta;
 use Database\Factories\ContaFactory;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
-
-class ContaDatabaseRepository implements ContaRepositoryContract {
+class ContaDatabaseRepository implements ContaRepositoryContract
+{
     protected $nomeDaTabela;
     protected $contaFactory;
 
@@ -27,7 +21,7 @@ class ContaDatabaseRepository implements ContaRepositoryContract {
         $this->contaFactory = $contaFactory;
     }
 
-    public function getConta(string $identificador) : ?Conta
+    public function getConta(string $identificador): ?Conta
     {
         $conta = DB::table($this->nomeDaTabela)
             ->where('identificador', $identificador)
@@ -41,7 +35,7 @@ class ContaDatabaseRepository implements ContaRepositoryContract {
         return $this->contaFactory->make($conta);
     }
 
-    public function salvarConta(Conta $conta) : void
+    public function salvarConta(Conta $conta): void
     {
         try {
             DB::table($this->nomeDaTabela)->insert(
@@ -51,9 +45,13 @@ class ContaDatabaseRepository implements ContaRepositoryContract {
                     'limite'        => $conta->getLimite()
                 ]
             );
-        } 
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             throw new ContaNaoSalvaException($conta->getIdentificador());
         }
+    }
+
+    public function getNomeDaTabela()
+    {
+        return $this->nomeDaTabela;
     }
 }
