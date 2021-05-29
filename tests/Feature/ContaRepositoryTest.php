@@ -13,6 +13,8 @@ use Illuminate\Support\Str;
 
 class ContaRepositoryTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function setUp(): void
     {
         parent::setUp();
