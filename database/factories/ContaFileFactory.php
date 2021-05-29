@@ -19,13 +19,11 @@ class ContaFileFactory
 
     public function make()
     {
-        Storage::fake('contas');
-
         $conta = $this->contaFactory->make();
         $contaTransformada = $this->contaTransformer
             ->formatar($conta);
 
-        Storage::disk('contas')->put(
+        Storage::fake('contas')->put(
             $conta->getIdentificador(),
             $contaTransformada
         );

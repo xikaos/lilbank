@@ -64,6 +64,12 @@ class ContaFileRepositoryTest extends TestCase
     {
         $conta = $this->contaFactory->make();
 
+        $discoFake = Storage::fake('contas');
+
+        Storage::shouldReceive('disk')
+            ->with('contas')
+            ->andReturn($discoFake);
+
         $this->contaFileRepository->salvarConta($conta);
 
         $contaNoSistemaDeArquivos = $this->contaFileRepository->getConta($conta->getIdentificador());
