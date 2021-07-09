@@ -3,17 +3,16 @@
 namespace Database\Factories;
 
 use Ramsey\Uuid\Uuid;
-
+use App\Policies\Domain\CategoriaContaPolicy;
 use App\Models\Conta;
 
 class ContaFactory
 {
-    const SALDO_NEGATIVO_MAXIMO = -1000;
-    const SALDO_POSITIVO_MAXIMO = 1000;
+    public const SALDO_NEGATIVO_MAXIMO = -1000;
+    public const SALDO_POSITIVO_MAXIMO = 1000;
+    public const LIMITE_POSITIVO_MAXIMO = 1000;
 
-    const LIMITE_POSITIVO_MAXIMO = 1000;
-
-    public function make($conta = null) : Conta
+    public function make($conta = null, $classe = null): Conta
     {
         if (is_object($conta)) {
             return new Conta(
@@ -32,11 +31,43 @@ class ContaFactory
         return new Conta($identificador, $saldo, $limite);
     }
 
-    public function atributosAleatorios() : Array
+    public function atributosAleatorios(): array
     {
         return [
             'identificador' => Uuid::uuid4(),
             'saldo'         => rand(self::SALDO_NEGATIVO_MAXIMO, self::SALDO_POSITIVO_MAXIMO),
+            'limite'        => rand(0, self::LIMITE_POSITIVO_MAXIMO)
+        ];
+    }
+
+    public function makeContaCategoriaA(): Conta
+    {
+        return $this->make($this->atributosContaCategoriaA());
+    }
+
+    public function makeContaCategoriaB(): Conta
+    {
+        return $this->make($this->atributosContaCategoriaB());
+    }
+
+    public function atributosContaCategoriaA(): array
+    {
+        $saldo = CategoriaContaPolicy::SALDO_CONTA_CATEGORIA_A + rand(0, self::SALDO_POSITIVO_MAXIMO);
+
+        return [
+            'identificador' => Uuid::uuid4(),
+            'saldo'         => $saldo,
+            'limite'        => rand(0, self::LIMITE_POSITIVO_MAXIMO)
+        ];
+    }
+
+    public function atributosContaCategoriaB(): array
+    {
+        $saldo = CategoriaContaPolicy::SALDO_CONTA_CATEGORIA_A - rand(0, self::SALDO_POSITIVO_MAXIMO);
+
+        return [
+            'identificador' => Uuid::uuid4(),
+            'saldo'         => $saldo,
             'limite'        => rand(0, self::LIMITE_POSITIVO_MAXIMO)
         ];
     }

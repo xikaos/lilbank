@@ -41,6 +41,7 @@
             "Database\\Seeders\\": "database/seeders/",
             "App\\Services\\": "Services/",
             "App\\Contracts\\": "Contracts/",
+            "App\\Transformers\\": "Transformers/",
             "App\\Exceptions\\": "Exceptions"
         }
     },
