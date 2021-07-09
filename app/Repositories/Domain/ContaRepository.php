@@ -6,16 +6,19 @@ use App\Contracts\Application\ContaRepositoryContract;
 use App\Contracts\Domain\ContaRepositoryContract as ContaDomainRepositoryContract;
 use App\Exceptions\ContaNaoEncontradaException;
 use App\Models\Conta;
+use App\Policies\Domain\CategoriaContaPolicy;
 use App\Repositories\Application\ContaDatabaseRepository;
 use App\Repositories\Application\ContaFileRepository;
 use Illuminate\Support\Collection;
+use App\Enums\Domain\CategoriaContaEnum;
 
 class ContaRepository implements ContaDomainRepositoryContract
 {
     private ContaRepositoryContract $contaRepository;
     private Collection $repositorios;
+    private CategoriaContaPolicy $categoriaContaPolicy;
 
-    public function __construct()
+    public function __construct(CategoriaContaPolicy $categoriaContaPolicy)
     {
         $this->repositorios = new Collection(
             [
@@ -25,6 +28,8 @@ class ContaRepository implements ContaDomainRepositoryContract
         );
 
         $this->contaRepository = app($this->repositorios->first());
+
+        $this->categoriaContaPolicy = $categoriaContaPolicy;
     }
 
     public function getConta(string $identificador): Conta
@@ -44,7 +49,17 @@ class ContaRepository implements ContaDomainRepositoryContract
 
     public function salvarConta(Conta $conta): void
     {
-        
+        $categoria = $this->categoriaContaPolicy->categoriza($conta);
+
+        if ($categoria == CategoriaContaEnum::CATEGORIA_A) {
+            $this->contaRepository = app(ContaDatabaseRepository::class);
+        }
+
+        if ($categoria == CategoriaContaEnum::CATEGORIA_B) {
+            $this->contaRepository = app(ContaFileRepository::class);
+        }
+
+        $this->contaRepository->salvarConta($conta);
     }
 
     private function mudaImplementacaoDoRepositorio(): void
