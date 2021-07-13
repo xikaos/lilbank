@@ -12,7 +12,7 @@ class ContaFactory
     public const SALDO_POSITIVO_MAXIMO = 1000;
     public const LIMITE_POSITIVO_MAXIMO = 1000;
 
-    public function make($conta = null, $classe = null): Conta
+    public function make($conta = null): Conta
     {
         if (is_object($conta)) {
             return new Conta(
@@ -42,12 +42,24 @@ class ContaFactory
 
     public function makeContaCategoriaA(): Conta
     {
-        return $this->make($this->atributosContaCategoriaA());
+        [
+            'identificador' => $identificador,
+            'saldo'         => $saldo,
+            'limite'        => $limite
+        ] = $this->atributosContaCategoriaA();
+
+        return new Conta($identificador, $saldo, $limite);
     }
 
     public function makeContaCategoriaB(): Conta
     {
-        return $this->make($this->atributosContaCategoriaB());
+        [
+            'identificador' => $identificador,
+            'saldo'         => $saldo,
+            'limite'        => $limite
+        ] = $this->atributosContaCategoriaB();
+
+        return new Conta($identificador, $saldo, $limite);
     }
 
     public function atributosContaCategoriaA(): array
