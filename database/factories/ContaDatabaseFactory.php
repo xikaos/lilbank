@@ -20,7 +20,7 @@ class ContaDatabaseFactory
      *
      * @return array
      */
-    public function make() : Conta
+    public function make(): Conta
     {
         $conta = $this->contaFactory->make();
 
