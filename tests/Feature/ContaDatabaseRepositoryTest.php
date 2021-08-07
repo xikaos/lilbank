@@ -22,7 +22,7 @@ class ContaDatabaseRepositoryTest extends TestCase
     protected $contaDatabaseRepository;
     protected $contaDatabaseFactory;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -31,7 +31,7 @@ class ContaDatabaseRepositoryTest extends TestCase
         $this->contaDatabaseRepository = app()->make(ContaDatabaseRepository::class);
     }
 
-    public function test_localiza_conta_pelo_identificador()
+    public function testLocalizaContaPeloIdentificador()
     {
         $conta = $this->contaDatabaseFactory->make();
 
@@ -40,7 +40,7 @@ class ContaDatabaseRepositoryTest extends TestCase
         $this->assertEquals($conta, $contaNoBancoDeDados);
     }
 
-    public function test_lanca_excecao_ao_buscar_conta_nao_persistida()
+    public function testLancaExcecaoAoBuscarContaNaoPersistida()
     {
         $this->expectException(ContaNaoEncontradaException::class);
 
@@ -49,14 +49,14 @@ class ContaDatabaseRepositoryTest extends TestCase
         $this->contaDatabaseRepository->getConta($conta->getIdentificador());
     }
 
-    public function test_lanca_excecao_ao_buscar_conta_inexistente()
+    public function testLancaExcecaoAoBuscaContaNaoExistente()
     {
         $this->expectException(ContaNaoEncontradaException::class);
 
         $this->contaDatabaseRepository->getConta(Str::random(rand(12, 48)));
     }
 
-    public function test_salva_conta_no_banco_de_dados()
+    public function testSalvaContaNoBancoDeDados()
     {
         $conta = $this->contaFactory->make();
 

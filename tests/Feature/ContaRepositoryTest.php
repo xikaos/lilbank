@@ -33,14 +33,14 @@ class ContaRepositoryTest extends TestCase
         $this->contaDatabaseFactory = app()->make(ContaDatabaseFactory::class);
     }
 
-    public function test_busca_conta_no_banco_de_dados()
+    public function testBuscaContaNoBancoDeDados()
     {
         $conta = $this->contaDatabaseFactory->make();
 
         $this->assertEquals($conta, $this->contaRepository->getConta($conta->getIdentificador()));
     }
 
-    public function test_busca_conta_no_sistema_de_arquivos()
+    public function testBuscaContaNoSistemaDeArquivos()
     {
         $conta = $this->contaFileFactory->make();
 
@@ -50,14 +50,14 @@ class ContaRepositoryTest extends TestCase
         );
     }
 
-    public function test_lancao_excecao_ao_busca_conta_inexistente()
+    public function testLancaExcecaoAoBuscarContaInexistente()
     {
         $this->expectException(ContaNaoEncontradaException::class);
 
         $this->contaRepository->getConta(Str::random(rand(12, 48)));
     }
 
-    public function test_salva_conta_categoria_a_no_banco_de_dados()
+    public function testSalvaContaCategoriaANoBancoDeDados()
     {
         $contaCategoriaA = $this->contaFactory->makeContaCategoriaA();
 
@@ -69,7 +69,7 @@ class ContaRepositoryTest extends TestCase
         );
     }
 
-    public function test_salva_conta_categoria_b_no_sistema_de_arquivos()
+    public function testSalvaContaCategoriaBNoSistemaDeArquivos()
     {
         $contaCategoriaB = $this->contaFactory->makeContaCategoriaB();
 

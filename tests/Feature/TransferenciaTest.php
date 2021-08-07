@@ -56,7 +56,7 @@ class TransferenciaTest extends TestCase
         ];
     }
 
-    public function test_nao_permite_transferencia_de_valor_zero()
+    public function testNaoPermiteTransferenciaDeValorZero()
     {
         [
             'saldoContaOrigem'  => $saldoContaOrigem,
@@ -74,7 +74,7 @@ class TransferenciaTest extends TestCase
         );
     }
 
-    public function test_transferencia_entre_contas()
+    public function testTransferenciaEntreContas()
     {
         [
             'saldoContaOrigem'  => $saldoContaOrigem,
@@ -98,7 +98,7 @@ class TransferenciaTest extends TestCase
         $this->assertEquals($saldoFinalDestino, $contaDestino->getSaldo());
     }
 
-    public function test_nao_permite_transferencia_com_valor_maior_que_saldo_total_disponivel()
+    public function testNaoPermiteTransferenciaComValorMaiorQueOSaldoTotalDisponivel()
     {
         [
             'contaOrigem'   => $contaOrigem,
