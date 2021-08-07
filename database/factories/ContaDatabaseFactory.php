@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use App\Entities\Conta;
+use App\Models\Conta as ContaModel;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class ContaDatabaseFactory
 {
@@ -24,7 +24,7 @@ class ContaDatabaseFactory
     {
         $conta = $this->contaFactory->make();
 
-        DB::table('contas')->insert(
+        ContaModel::create(
             [
             'identificador' => $conta->getIdentificador(),
             'saldo'         => $conta->getSaldo(),
