@@ -5,12 +5,17 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Repositories\Domain\ContaRepository;
+use App\Repositories\Application\ContaFileRepository;
+use App\Repositories\Application\ContaDatabaseRepository;
 use Tests\TestCase;
 use Database\Factories\ContaDatabaseFactory;
 use Database\Factories\ContaFileFactory;
 use Database\Factories\ContaFactory;
 use App\Exceptions\ContaNaoEncontradaException;
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
+
 
 class ContaRepositoryTest extends TestCase
 {
@@ -21,9 +26,12 @@ class ContaRepositoryTest extends TestCase
         parent::setUp();
 
         $this->contaRepository = app(ContaRepository::class);
+        $this->contaFileRepository = app(ContaFileRepository::class);
+        $this->contaDatabaseRepository = app(ContaDatabaseRepository::class);
+
         $this->contaFactory = app()->make(ContaFactory::class);
-        $this->contaDatabaseFactory = app()->make(ContaDatabaseFactory::class);
         $this->contaFileFactory = app()->make(ContaFileFactory::class);
+        $this->contaDatabaseFactory = app()->make(ContaDatabaseFactory::class);
     }
 
     public function test_busca_conta_no_banco_de_dados()
@@ -37,7 +45,10 @@ class ContaRepositoryTest extends TestCase
     {
         $conta = $this->contaFileFactory->make();
 
-        $this->assertEquals($conta, $this->contaRepository->getConta($conta->getIdentificador()));
+        $this->assertEquals(
+            $conta,
+            $this->contaFileRepository->getConta($conta->getIdentificador())
+        );
     }
 
     public function test_lancao_excecao_ao_busca_conta_inexistente()
@@ -54,7 +65,7 @@ class ContaRepositoryTest extends TestCase
         $this->contaRepository->salvarConta($contaCategoriaA);
 
         $this->assertEquals(
-            $this->contaRepository->getConta($contaCategoriaA->getIdentificador()),
+            $this->contaDatabaseRepository->getConta($contaCategoriaA->getIdentificador()),
             $contaCategoriaA
         );
     }
@@ -66,7 +77,7 @@ class ContaRepositoryTest extends TestCase
         $this->contaRepository->salvarConta($contaCategoriaB);
 
         $this->assertEquals(
-            $this->contaRepository->getConta($contaCategoriaB->getIdentificador()),
+            $this->contaFileRepository->getConta($contaCategoriaB->getIdentificador()),
             $contaCategoriaB
         );
     }
