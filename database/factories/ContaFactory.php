@@ -75,12 +75,14 @@ class ContaFactory
 
     public function atributosContaCategoriaB(): array
     {
-        $saldo = CategoriaContaPolicy::SALDO_CONTA_CATEGORIA_A - rand(0, self::SALDO_POSITIVO_MAXIMO);
+        $limiteSuperiorSaldo = rand(1, (CategoriaContaPolicy::SALDO_CONTA_CATEGORIA_A - 1));
+        $saldo = rand(0, $limiteSuperiorSaldo);
+        $limite = $limiteSuperiorSaldo - $saldo;
 
         return [
             'identificador' => Uuid::uuid4(),
             'saldo'         => $saldo,
-            'limite'        => rand(0, self::LIMITE_POSITIVO_MAXIMO)
+            'limite'        => $limite
         ];
     }
 }
