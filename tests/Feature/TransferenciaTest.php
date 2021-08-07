@@ -21,11 +21,6 @@ class TransferenciaTest extends TestCase
 
     private $transferenciaService;
 
-    private function createService(TransferenciaServiceContract $transferenciaService)
-    {
-        $this->transferenciaService = $transferenciaService;
-    }
-
     public function setUp() : void
     {
         parent::setUp();
