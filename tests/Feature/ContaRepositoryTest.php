@@ -74,6 +74,12 @@ class ContaRepositoryTest extends TestCase
     {
         $contaCategoriaB = $this->contaFactory->makeContaCategoriaB();
 
+        $discoFake = Storage::fake('contas');
+
+        Storage::shouldReceive('disk')
+            ->with('contas')
+            ->andReturn($discoFake);
+
         $this->contaRepository->salvarConta($contaCategoriaB);
 
         $this->assertEquals(
