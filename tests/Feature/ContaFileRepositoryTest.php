@@ -37,7 +37,7 @@ class ContaFileRepositoryTest extends TestCase
     public function test_localiza_conta_pelo_identificador()
     {
         $conta = $this->contaFileFactory->make();
-        
+
         $contaNoSistemaDeArquivos = $this->contaFileRepository->getConta($conta->getIdentificador());
 
         $this->assertEquals($conta, $contaNoSistemaDeArquivos);
@@ -46,18 +46,17 @@ class ContaFileRepositoryTest extends TestCase
     public function test_lanca_excecao_ao_buscar_conta_nao_persistida()
     {
         $this->expectException(ContaNaoEncontradaException::class);
-        
+
         $conta = $this->contaFactory->make();
-        
+
         $contaNoSistemaDeArquivos = $this->contaFileRepository->getConta($conta->getIdentificador());
     }
-    
+
     public function test_lanca_excecao_ao_buscar_conta_inexistente()
     {
         $this->expectException(ContaNaoEncontradaException::class);
-        
-        $this->contaFileRepository->getConta(Str::random(rand(12, 48)));
 
+        $this->contaFileRepository->getConta(Str::random(rand(12, 48)));
     }
 
     public function test_salva_conta_no_sistema_de_arquivos()
@@ -90,6 +89,3 @@ class ContaFileRepositoryTest extends TestCase
         $this->contaFileRepository->salvarConta($conta);
     }
 }
-
-// TODO
-// Mockar filesystem ao salvar a conta
