@@ -2,11 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Facades\DB;
-
-use Carbon\Carbon;
-
 use App\Entities\Conta;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ContaDatabaseFactory
 {

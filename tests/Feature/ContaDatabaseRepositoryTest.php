@@ -2,23 +2,17 @@
 
 namespace Tests\Feature;
 
-use Exception;
-
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-
 use App\Exceptions\ContaNaoEncontradaException;
 use App\Exceptions\ContaNaoSalvaException;
-
+use App\Repositories\Application\ContaDatabaseRepository;
+use Database\Factories\ContaDatabaseFactory;
+use Database\Factories\ContaFactory;
+use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Tests\TestCase;
-
-use Database\Factories\ContaFactory;
-use Database\Factories\ContaDatabaseFactory;
-
-use App\Repositories\Application\ContaDatabaseRepository;
 
 class ContaDatabaseRepositoryTest extends TestCase
 {
