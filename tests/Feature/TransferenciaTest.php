@@ -21,7 +21,7 @@ class TransferenciaTest extends TestCase
 
     private $transferenciaService;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
