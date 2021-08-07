@@ -67,7 +67,7 @@ class ContaDatabaseRepositoryTest extends TestCase
         $this->assertEquals($conta, $contaNoBancoDeDados);
     }
 
-    public function test_lanca_excecao_na_ocorrencia_de_falha_ao_salvar()
+    public function testLancaExcecaoNaOcorrenciaDeFalhaAoSalvar()
     {
         $this->expectException(ContaNaoSalvaException::class);
 
