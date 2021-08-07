@@ -9,7 +9,8 @@ use App\Models\Valor;
 
 use App\Exceptions\LimiteInsuficienteException;
 
-class TransferenciaService implements TransferenciaServiceContract {
+class TransferenciaService implements TransferenciaServiceContract
+{
     public function transferir(Conta $contaOrigem, Conta $contaDestino, Valor $valor) : void
     {
         $this->validaTransferencia($contaOrigem, $valor);

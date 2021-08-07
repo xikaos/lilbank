@@ -26,12 +26,14 @@ class ContaDatabaseFactory
     {
         $conta = $this->contaFactory->make();
 
-        DB::table('contas')->insert([
+        DB::table('contas')->insert(
+            [
             'identificador' => $conta->getIdentificador(),
             'saldo'         => $conta->getSaldo(),
             'limite'        => $conta->getLimite(),
             'created_at'    => Carbon::now()
-        ]);
+            ]
+        );
 
         return $conta;
     }

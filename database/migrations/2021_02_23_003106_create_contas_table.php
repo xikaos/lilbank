@@ -13,13 +13,15 @@ class CreateContasTable extends Migration
      */
     public function up()
     {
-        Schema::create('contas', function (Blueprint $table) {
-            $table->id();
-            $table->string('identificador', 36);
-            $table->bigInteger('saldo');
-            $table->bigInteger('limite');
-            $table->timestamps();
-        });
+        Schema::create(
+            'contas', function (Blueprint $table) {
+                $table->id();
+                $table->string('identificador', 36);
+                $table->bigInteger('saldo');
+                $table->bigInteger('limite');
+                $table->timestamps();
+            }
+        );
     }
 
     /**

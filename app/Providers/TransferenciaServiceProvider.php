@@ -18,7 +18,7 @@ class TransferenciaServiceProvider extends ServiceProvider
     {
         $this->app->bind(TransferenciaServiceContract::class, TransferenciaService::class);
 
-        # Breaks on tests because of no type-hinting (empty buildStack on container)
+        // Breaks on tests because of no type-hinting (empty buildStack on container)
         /*
             $this->app
                 ->when(TransferenciaTest::class)

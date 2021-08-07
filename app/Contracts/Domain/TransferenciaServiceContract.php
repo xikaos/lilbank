@@ -6,6 +6,7 @@ namespace App\Contracts\Domain;
 use App\Models\Conta;
 use App\Models\Valor;
 
-interface TransferenciaServiceContract {
+interface TransferenciaServiceContract
+{
     function transferir(Conta $contaOrigem, Conta $contaDestino, Valor $valor) : void;
 }

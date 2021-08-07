@@ -11,7 +11,8 @@ use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
 
-class ContaFileRepository implements ContaRepositoryContract {
+class ContaFileRepository implements ContaRepositoryContract
+{
     private string $disco;
     private ContaTransformerInterface $contaTransformer;
 

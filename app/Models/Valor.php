@@ -4,7 +4,8 @@ namespace App\Models;
 
 use App\Exceptions\QuantiaInvalidaException;
 
-class Valor {
+class Valor
+{
     protected $quantia;
 
     public function __construct(int $quantia)

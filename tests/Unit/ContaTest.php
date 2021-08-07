@@ -78,8 +78,8 @@ class ContaTest extends TestCase
 
     public function testCalculaSaldoTotalDisponivel()
     {
-        $saldoInicial = rand(0,100);
-        $limiteInicial = rand(0,100);
+        $saldoInicial = rand(0, 100);
+        $limiteInicial = rand(0, 100);
 
         $conta = new Conta(
             identificador: Uuid::uuid4(),

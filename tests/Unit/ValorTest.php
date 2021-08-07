@@ -23,12 +23,12 @@ class ValorTest extends TestCase
     public function test_falha_inicializacao_com_valor_negativo()
     {
         $this->expectException(QuantiaInvalidaException::class);
-        new Valor(rand(-100,-1));
+        new Valor(rand(-100, -1));
     }
 
     public function test_inicializa_com_valores_positivos()
     {
-        $quantia = rand(1,100);
+        $quantia = rand(1, 100);
 
         $valor = new Valor($quantia);
 
