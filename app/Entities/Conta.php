@@ -18,22 +18,22 @@ class Conta
         $this->setLimite($limite);
     }
 
-    public function getIdentificador() : string
+    public function getIdentificador(): string
     {
         return $this->identificador;
     }
 
-    public function getSaldo() : int
+    public function getSaldo(): int
     {
         return $this->saldo;
     }
 
-    public function setSaldo(int $valor) : void
+    public function setSaldo(int $valor): void
     {
         $this->saldo = $valor;
     }
 
-    public function getLimite() : int
+    public function getLimite(): int
     {
         return $this->limite;
     }
@@ -48,14 +48,14 @@ class Conta
         $this->limite = $valor;
     }
 
-    public function debitar(Valor $valor) : void
+    public function debitar(Valor $valor): void
     {
         $novoSaldo = $this->getSaldo() - $valor->getQuantia();
 
         $this->setSaldo($novoSaldo);
     }
 
-    public function creditar(Valor $valor) : void
+    public function creditar(Valor $valor): void
     {
         $novoSaldo = $this->getSaldo() + $valor->getQuantia();
 
