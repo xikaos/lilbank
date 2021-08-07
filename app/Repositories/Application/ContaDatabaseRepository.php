@@ -5,7 +5,7 @@ namespace App\Repositories\Application;
 use App\Contracts\Application\ContaRepositoryContract;
 use App\Exceptions\ContaNaoEncontradaException;
 use App\Exceptions\ContaNaoSalvaException;
-use App\Models\Conta;
+use App\Entities\Conta;
 use Database\Factories\ContaFactory;
 use Exception;
 use Illuminate\Support\Facades\DB;

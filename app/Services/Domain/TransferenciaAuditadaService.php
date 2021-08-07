@@ -4,7 +4,7 @@ namespace App\Services\Domain;
 
 use App\Contracts\Domain\TransferenciaServiceContract;
 
-use App\Models\Conta;
+use App\Entities\Conta;
 
 class TransferenciaAuditadaService implements TransferenciaServiceContract
 {

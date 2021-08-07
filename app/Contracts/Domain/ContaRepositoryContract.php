@@ -2,7 +2,7 @@
 
 namespace App\Contracts\Domain;
 
-use App\Models\Conta;
+use App\Entities\Conta;
 
 interface ContaRepositoryContract
 {

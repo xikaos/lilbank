@@ -3,8 +3,8 @@
 
 namespace App\Contracts\Domain;
 
-use App\Models\Conta;
-use App\Models\Valor;
+use App\Entities\Conta;
+use App\Entities\Valor;
 
 interface TransferenciaServiceContract
 {

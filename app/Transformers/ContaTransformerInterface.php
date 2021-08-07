@@ -2,7 +2,7 @@
 
 namespace App\Transformers;
 
-use App\Models\Conta;
+use App\Entities\Conta;
 
 interface ContaTransformerInterface
 {

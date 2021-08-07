@@ -5,7 +5,7 @@ namespace App\Repositories\Domain;
 use App\Contracts\Application\ContaRepositoryContract;
 use App\Contracts\Domain\ContaRepositoryContract as ContaDomainRepositoryContract;
 use App\Exceptions\ContaNaoEncontradaException;
-use App\Models\Conta;
+use App\Entities\Conta;
 use App\Policies\Domain\CategoriaContaPolicy;
 use App\Repositories\Application\ContaDatabaseRepository;
 use App\Repositories\Application\ContaFileRepository;

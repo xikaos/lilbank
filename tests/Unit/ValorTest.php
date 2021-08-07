@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use App\Exceptions\QuantiaInvalidaException;
 use PHPUnit\Framework\TestCase;
 
-use App\Models\Valor;
+use App\Entities\Valor;
 
 class ValorTest extends TestCase
 {

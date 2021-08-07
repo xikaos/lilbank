@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
 
-use App\Models\Conta;
+use App\Entities\Conta;
 
 class ContaDatabaseFactory
 {

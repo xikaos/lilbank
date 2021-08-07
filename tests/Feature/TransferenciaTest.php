@@ -9,8 +9,8 @@ use Tests\TestCase;
 
 use App\Contracts\Domain\TransferenciaServiceContract;
 
-use App\Models\Conta;
-use App\Models\Valor;
+use App\Entities\Conta;
+use App\Entities\Valor;
 
 use App\Exceptions\LimiteInsuficienteException;
 use App\Exceptions\QuantiaInvalidaException;

@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Ramsey\Uuid\Uuid;
 use App\Policies\Domain\CategoriaContaPolicy;
-use App\Models\Conta;
+use App\Entities\Conta;
 
 class ContaFactory
 {

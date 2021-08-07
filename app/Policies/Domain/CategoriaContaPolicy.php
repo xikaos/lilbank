@@ -3,7 +3,7 @@
 namespace App\Policies\Domain;
 
 use App\Enums\Domain\CategoriaContaEnum;
-use App\Models\Conta;
+use App\Entities\Conta;
 
 class CategoriaContaPolicy
 {

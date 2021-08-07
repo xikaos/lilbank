@@ -7,8 +7,8 @@ use Ramsey\Uuid\Uuid;
 use App\Exceptions\LimiteInvalidoException;
 use PHPUnit\Framework\TestCase;
 
-use App\Models\Conta;
-use App\Models\Valor;
+use App\Entities\Conta;
+use App\Entities\Valor;
 
 class ContaTest extends TestCase
 {

@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Entities;
 
-use App\Models\Valor;
-
+use App\Entities\Valor;
 use App\Exceptions\LimiteInvalidoException;
 
 class Conta
