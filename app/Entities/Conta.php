@@ -11,8 +11,11 @@ class Conta
     protected $saldo;
     protected $limite;
 
-    public function __construct(string $identificador = null, int $saldo = 0, int $limite = 0)
-    {
+    public function __construct(
+        string $identificador = 'Sem Identificador',
+        int $saldo = 0,
+        int $limite = 0
+    ) {
         $this->identificador = $identificador;
         $this->saldo = $saldo;
         $this->setLimite($limite);

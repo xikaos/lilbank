@@ -4,14 +4,15 @@ namespace Tests\Feature;
 
 use App\Exceptions\ContaNaoEncontradaException;
 use App\Exceptions\ContaNaoSalvaException;
+use App\Models\Conta;
 use App\Repositories\Application\ContaDatabaseRepository;
 use Database\Factories\ContaDatabaseFactory;
 use Database\Factories\ContaFactory;
 use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Mockery;
 use Tests\TestCase;
 
 class ContaDatabaseRepositoryTest extends TestCase
@@ -69,14 +70,21 @@ class ContaDatabaseRepositoryTest extends TestCase
 
     public function testLancaExcecaoNaOcorrenciaDeFalhaAoSalvar()
     {
+        $this->inicializaContaDatabaseRepositoryComNomeDaTabela('tabela_nao_existente');
+
         $this->expectException(ContaNaoSalvaException::class);
 
         $conta = $this->contaFactory->make();
 
-        DB::shouldReceive('table')
-            ->with($this->contaDatabaseRepository->getNomeDaTabela())
-            ->andThrows(new Exception());
+        $contaSalva = $this->contaDatabaseRepository->salvarConta($conta);
+        dd($contaSalva);
+    }
 
-        $this->contaDatabaseRepository->salvarConta($conta);
+    private function inicializaContaDatabaseRepositoryComNomeDaTabela(string $nomeDaTabela)
+    {
+        $this->contaDatabaseRepository = app()->make(
+            ContaDatabaseRepository::class,
+            ['nomeDaTabela' => $nomeDaTabela]
+        );
     }
 }
