@@ -7,12 +7,11 @@ use App\Exceptions\ContaNaoSalvaException;
 use App\Repositories\Application\ContaDatabaseRepository;
 use Database\Factories\ContaDatabaseFactory;
 use Database\Factories\ContaFactory;
-use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Tests\TestCase;
+use App\Models\Conta as ContaModel;
+use App\Models\ContaTesteExcecao;
 
 class ContaDatabaseRepositoryTest extends TestCase
 {
@@ -69,14 +68,12 @@ class ContaDatabaseRepositoryTest extends TestCase
 
     public function testLancaExcecaoNaOcorrenciaDeFalhaAoSalvar()
     {
+        $contaDatabaseRepositoryComProblemas =  app()->makeWith(ContaDatabaseRepository::class, ['contaModel' => new ContaTesteExcecao()]);
+
         $this->expectException(ContaNaoSalvaException::class);
 
         $conta = $this->contaFactory->make();
 
-        DB::shouldReceive('table')
-            ->with($this->contaDatabaseRepository->getNomeDaTabela())
-            ->andThrows(new Exception());
-
-        $this->contaDatabaseRepository->salvarConta($conta);
+        $contaDatabaseRepositoryComProblemas->salvarConta($conta);
     }
 }
