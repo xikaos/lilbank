@@ -5,22 +5,30 @@ namespace Tests\Unit;
 use PHPUnit\Framework\TestCase;
 
 use App\Entities\Identificador;
+use App\Exceptions\IdentificadorInvalidoException;
 
 class IdentificadorTest extends TestCase
 {
-    public function testInicializaIdentificadorComValorNaoNulo()
+    public function testNaoInicializaComStringNula()
     {
-        $identificador = new Identificador();
+        $this->expectException(IdentificadorInvalidoException::class);
 
-        $this->assertNotNull($identificador->getIdentificador());
+        new Identificador("");
     }
 
-    public function testInicializaIdentificadorComParametroPassado()
+    public function testInicializaIdentificadorComParametroInvalido()
     {
-        $valorDoIdentificador = 'identificador-da-conta';
+        $this->expectException(IdentificadorInvalidoException::class);
 
-        $identificador = new Identificador($valorDoIdentificador);
+        new Identificador('identificador-invalido');
+    }
 
-        $this->assertEquals($valorDoIdentificador, $identificador->getIdentificador());
+    public function testInicializaIdentificadorComParametroValido()
+    {
+        $identificadorValido = Identificador::gerar();
+        $identificador = new Identificador($identificadorValido);
+
+        $this->assertNotNull($identificador);
+        $this->assertEquals($identificador, $identificadorValido);
     }
 }
