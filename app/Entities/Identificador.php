@@ -2,26 +2,32 @@
 
 namespace App\Entities;
 
+use App\Contracts\Domain\ValorObjeto;
+
 use App\Exceptions\IdentificadorInvalidoException;
 
-// Maybe this could be abstracted in an interface?
-// Switching UUID version based on saldo seems evil T_T
+// @TODO - Abstract this dependency
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidFactory;
 use Ramsey\Uuid\Rfc4122\Validator as Rfc4122Validator;
 
-class Identificador
+class Identificador implements ValorObjeto
 {
-    private string $identificador;
+    private string $valor;
+
+    public function getValor()
+    {
+        return $this->valor;
+    }
 
     public static function gerar(): string
     {
         return Uuid::uuid4();
     }
 
-    public function __construct(string $identificador)
+    public function __construct(string $valor)
     {
-        if (empty($identificador)) {
+        if (empty($valor)) {
             throw IdentificadorInvalidoException::identificadorNulo();
         }
 
@@ -30,15 +36,10 @@ class Identificador
 
         Uuid::setFactory($factory);
 
-        if (!Uuid::isValid($identificador)) {
-            throw new IdentificadorInvalidoException($identificador);
+        if (!Uuid::isValid($valor)) {
+            throw new IdentificadorInvalidoException($valor);
         }
 
-        $this->identificador = $identificador;
-    }
-
-    public function __toString(): string
-    {
-        return $this->identificador;
+        $this->valor = $valor;
     }
 }

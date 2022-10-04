@@ -29,6 +29,6 @@ class IdentificadorTest extends TestCase
         $identificador = new Identificador($identificadorValido);
 
         $this->assertNotNull($identificador);
-        $this->assertEquals($identificador, $identificadorValido);
+        $this->assertEquals($identificadorValido, $identificador->getValor());
     }
 }
