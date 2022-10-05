@@ -11,6 +11,7 @@ use App\Contracts\Domain\TransferenciaServiceContract;
 
 use App\Entities\Conta;
 use App\Entities\Valor;
+use App\Entities\Identificador;
 
 use App\Exceptions\LimiteInsuficienteException;
 use App\Exceptions\QuantiaInvalidaException;
@@ -20,12 +21,17 @@ class TransferenciaTest extends TestCase
     use WithFaker;
 
     private $transferenciaService;
+    private $identificadorContaOrigem;
+    private $identificadorContaDestino;
 
     public function setUp(): void
     {
         parent::setUp();
 
         $this->transferenciaService = $this->app->make(TransferenciaServiceContract::class);
+
+        $this->identificadorContaOrigem = new Identificador(Identificador::gerar());
+        $this->identificadorContaDestino = new Identificador(Identificador::gerar());
     }
 
     private function inicializaSaldosEContas()
@@ -33,15 +39,8 @@ class TransferenciaTest extends TestCase
         $saldoContaOrigem = $this->faker->numberBetween(0, 100);
         $saldoContaDestino = $this->faker->numberBetween(0, 100);
 
-        $contaOrigem = new Conta(
-            identificador: Uuid::uuid4(),
-            saldo: $saldoContaOrigem
-        );
-
-        $contaDestino = new Conta(
-            identificador: Uuid::uuid4(),
-            saldo: $saldoContaDestino
-        );
+        $contaOrigem = new Conta($this->identificadorContaOrigem, $saldoContaOrigem);
+        $contaDestino = new Conta($this->identificadorContaDestino, $saldoContaDestino);
 
         return [
             'saldoContaOrigem'  => $saldoContaOrigem,
