@@ -11,7 +11,7 @@ class Conta
     protected $saldo;
     protected $limite;
 
-    public function __construct(string $identificador = null, int $saldo = 0, int $limite = 0)
+    public function __construct(Identificador $identificador, int $saldo = 0, int $limite = 0)
     {
         $this->identificador = $identificador;
         $this->saldo = $saldo;
@@ -20,7 +20,7 @@ class Conta
 
     public function getIdentificador(): string
     {
-        return $this->identificador;
+        return $this->identificador->getValor();
     }
 
     public function getSaldo(): int

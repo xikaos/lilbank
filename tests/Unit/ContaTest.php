@@ -9,19 +9,27 @@ use PHPUnit\Framework\TestCase;
 
 use App\Entities\Conta;
 use App\Entities\Valor;
+use App\Entities\Identificador;
 
 class ContaTest extends TestCase
 {
+    private $identificador;
     /**
      * A basic unit test example.
      *
      * @return void
      */
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->identificador = new Identificador(Identificador::gerar());
+    }
+
     public function testSaldoZeradoNaCriacaoDeConta()
     {
-        $conta = new Conta(
-            identificador: Uuid::uuid4()
-        );
+        $conta = new Conta($this->identificador);
 
         $this->assertEquals(0, $conta->getSaldo());
     }
@@ -32,26 +40,20 @@ class ContaTest extends TestCase
 
         $limite = rand(-100, -1);
 
-        new Conta(
-            identificador: Uuid::uuid4(),
-            limite: $limite
-        );
+        new Conta($this->identificador, 0, $limite);
     }
 
     public function testSaldoDiferenteDeZeroNaCriacaoComValorInicial()
     {
         $valorInicial = 100;
-        $conta = new Conta(
-            identificador: Uuid::uuid4(),
-            saldo: $valorInicial
-        );
+        $conta = new Conta($this->identificador, $valorInicial);
 
         $this->assertEquals($valorInicial, $conta->getSaldo());
     }
 
     public function testCreditarValorNaConta()
     {
-        $conta = new Conta(Uuid::uuid4());
+        $conta = new Conta($this->identificador);
         $valorCredito = new Valor(rand(0, 100));
 
         $conta->creditar($valorCredito);
@@ -64,10 +66,7 @@ class ContaTest extends TestCase
         $valorInicial = 100;
         $valorDebito = new Valor(rand(0, 50));
         
-        $conta = new Conta(
-            identificador: Uuid::uuid4(),
-            saldo: $valorInicial
-        );
+        $conta = new Conta($this->identificador, $valorInicial);
         
         $conta->debitar($valorDebito);
         
@@ -81,11 +80,7 @@ class ContaTest extends TestCase
         $saldoInicial = rand(0, 100);
         $limiteInicial = rand(0, 100);
 
-        $conta = new Conta(
-            identificador: Uuid::uuid4(),
-            saldo: $saldoInicial,
-            limite: $limiteInicial
-        );
+        $conta = new Conta($this->identificador, $saldoInicial, $limiteInicial);
 
         $saldoTotalDisponivel = $saldoInicial + $limiteInicial;
 
