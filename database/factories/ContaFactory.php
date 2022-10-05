@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use Ramsey\Uuid\Uuid;
 use App\Policies\Domain\CategoriaContaPolicy;
 use App\Entities\Conta;
+use App\Entities\Identificador;
 
 class ContaFactory
 {
@@ -16,7 +16,7 @@ class ContaFactory
     {
         if (is_object($conta)) {
             return new Conta(
-                $conta->identificador,
+                new Identificador($conta->identificador),
                 $conta->saldo,
                 $conta->limite
             );
@@ -34,7 +34,7 @@ class ContaFactory
     public function atributosAleatorios(): array
     {
         return [
-            'identificador' => Uuid::uuid4(),
+            'identificador' => new Identificador(Identificador::gerar()),
             'saldo'         => rand(self::SALDO_NEGATIVO_MAXIMO, self::SALDO_POSITIVO_MAXIMO),
             'limite'        => rand(0, self::LIMITE_POSITIVO_MAXIMO)
         ];
@@ -67,7 +67,7 @@ class ContaFactory
         $saldo = CategoriaContaPolicy::SALDO_CONTA_CATEGORIA_A + rand(0, self::SALDO_POSITIVO_MAXIMO);
 
         return [
-            'identificador' => Uuid::uuid4(),
+            'identificador' => new Identificador(Identificador::gerar()),
             'saldo'         => $saldo,
             'limite'        => rand(0, self::LIMITE_POSITIVO_MAXIMO)
         ];
@@ -80,7 +80,7 @@ class ContaFactory
         $limite = $limiteSuperiorSaldo - $saldo;
 
         return [
-            'identificador' => Uuid::uuid4(),
+            'identificador' => new Identificador(Identificador::gerar()),
             'saldo'         => $saldo,
             'limite'        => $limite
         ];
