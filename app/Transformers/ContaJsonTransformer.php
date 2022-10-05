@@ -3,9 +3,9 @@
 namespace App\Transformers;
 
 use App\Entities\Conta;
+use App\Entities\Identificador;
 
 use App\Transformers\ContaTransformerInterface;
-
 
 class ContaJsonTransformer implements ContaTransformerInterface
 {
@@ -24,10 +24,7 @@ class ContaJsonTransformer implements ContaTransformerInterface
     {
         $contaObjeto = json_decode($jsonConta);
 
-        return new Conta(
-            identificador: $contaObjeto->identificador,
-            saldo: $contaObjeto->saldo,
-            limite: $contaObjeto->limite
-        );
+        $identificador = new Identificador($contaObjeto->identificador);
+        return new Conta($identificador, $contaObjeto->saldo, $contaObjeto->limite);
     }
 }
